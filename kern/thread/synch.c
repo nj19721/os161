@@ -175,6 +175,7 @@ void
 lock_destroy(struct lock *lock)
 {
 	KASSERT(lock != NULL);
+	KASSERT(lock->t == NULL);
 
 	// add stuff here as needed
 	spinlock_cleanup(&lock->lk_lock);
@@ -217,6 +218,7 @@ lock_release(struct lock *lock)
 	//(void)lock;  // suppress warning until code gets written
 
 	KASSERT(lock != NULL);
+	KASSERT(lock->t != NULL);
 
 	if(lock_do_i_hold(lock)){
 		spinlock_acquire(&lock->lk_lock);
